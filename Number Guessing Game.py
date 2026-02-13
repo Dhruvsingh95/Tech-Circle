@@ -23,7 +23,7 @@ def run_round():
     secret = random.randint(min_num, max_num)
     tries = 0
 
-    print("\n🎯 I've chosen a number between 1 and 100.")
+    print("\n I've chosen a number between 1 and 100.")
     print("Let's see how quickly you can guess it!")
 
     while True:
@@ -35,7 +35,7 @@ def run_round():
         elif guess > secret:
             print("Too high… go lower.")
         else:
-            print(f"🎉 Nice! You got it in {tries} tries.")
+            print(f" Nice! You got it in {tries} tries.")
             break
 
 
@@ -47,7 +47,7 @@ def start_game():
 
         play_again = input("\nWant to play again? (y/n): ").strip().lower()
         if play_again != "y":
-            print("👋 Thanks for playing. See you next time!")
+            print(" Thanks for playing. See you next time!")
             break
 
 
