@@ -1,4 +1,4 @@
-mport random
+import random
 
 def ask_for_guess(min_num, max_num):
 
