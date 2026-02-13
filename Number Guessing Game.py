@@ -1,4 +1,4 @@
-mport random
+import random
 
 def ask_for_guess(min_num, max_num):
 
@@ -23,8 +23,8 @@ def run_round():
     secret = random.randint(min_num, max_num)
     tries = 0
 
-    print("\n🎯 I've chosen a number between 1 and 100.")
-    print("Let's see how quickly you can guess it!")
+    print("\n I've chosen a number between 1 and 100.")
+    print("Let's see how quickly can you guess it!")
 
     while True:
         guess = ask_for_guess(min_num, max_num)
