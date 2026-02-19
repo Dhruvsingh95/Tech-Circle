@@ -1,0 +1,79 @@
+import csv
+from datetime import datetime
+
+class ExpenseTracker:
+    def __init__(self, filename='expenses.csv'):
+        self.filename = filename
+        self.expenses = []
+        self.load_data()
+
+    def load_data(self):
+        
+        try:
+            with open(self.filename, mode='r', newline='') as file:
+                reader = csv.DictReader(file)
+                self.expenses = [row for row in reader]
+        except FileNotFoundError:
+            self.expenses = []
+
+    def save_data(self):
+
+        fieldnames = ['date', 'category', 'description', 'amount']
+        with open(self.filename, mode='w', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(self.expenses)
+
+    def add_expense(self, category, description, amount:
+        new_expense = {
+            'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'category': category,
+            'description': description,
+            'amount': f"{float(amount):.2f}"
+        }
+        self.expenses.append(new_expense)
+        self.save_data()
+        print("Expense added successfully!")
+
+    def show_summary(self):
+        if not self.expenses:
+            print("No expenses recorded yet.")
+            return
+
+        print("\n--- Expense Summary ---")
+        total = 0
+        for exp in self.expenses:
+            print(f"{exp['date']} | {exp['category']} | {exp['description']}: ${exp['amount']}")
+            total += float(exp['amount'])
+        print(f"-----------------------")
+        print(f"Total Spent: ${total:.2f}\n")
+
+def main():
+    tracker = ExpenseTracker()
+    
+    while True:
+        print("1. Add Expense")
+        print("2. View Summary")
+        print("3. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            category = input("Enter category (e.g., Food, Transport): ")
+            desc = input("Enter description: ")
+            amt = input("Enter amount: ")
+            try:
+                tracker.add_expense(category, desc, amt)
+            except ValueError:
+                print("Invalid amount. Please enter a number.")
+        
+        elif choice == '2':
+            tracker.show_summary()
+            
+        elif choice == '3':
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice, try again.")
+
+if __name__ == "__main__":
+    main()
