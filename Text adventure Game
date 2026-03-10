@@ -1,0 +1,50 @@
+def play_game():
+    # 1. Setup the world
+    rooms = {
+        'Entrance': {
+            'desc': 'You are in a dark foyer. A light shines from the East.',
+            'east': 'Library'
+        },
+        'Library': {
+            'desc': 'Walls of books surround you. The exit is West.',
+            'west': 'Entrance'
+        }
+    }
+
+    current_room = 'Entrance'
+    
+    print("Welcome to the Python Quest!")
+    print("----------------------------")
+
+    # 2. The Main Loop
+    while True:
+        print(f"\nLocation: {current_room}")
+        print(rooms[current_room]['desc'])
+        
+        # ALL of this below must be indented 8 spaces (or 2 tabs)
+        user_input = input("> ").lower().strip()
+        
+        if not user_input:
+            print("Please type a command!")
+            continue  # Now this is "properly in loop"!
+
+        command = user_input.split()
+
+        if command[0] == "quit":
+            print("Goodbye!")
+            break
+
+        if command[0] == "go":
+            if len(command) > 1:
+                direction = command[1]
+                if direction in rooms[current_room]:
+                    current_room = rooms[current_room][direction]
+                else:
+                    print(f"You can't go {direction}!")
+            else:
+                print("Go where? (e.g., 'go east')")
+        else:
+            print("I don't understand. Try 'go [direction]' or 'quit'.")
+
+# This starts the function - keep it at the very edge!
+play_game()
