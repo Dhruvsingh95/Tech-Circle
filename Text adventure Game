@@ -21,12 +21,11 @@ def play_game():
         print(f"\nLocation: {current_room}")
         print(rooms[current_room]['desc'])
         
-        # ALL of this below must be indented 8 spaces (or 2 tabs)
         user_input = input("> ").lower().strip()
         
         if not user_input:
             print("Please type a command!")
-            continue  # Now this is "properly in loop"!
+            continue  
 
         command = user_input.split()
 
