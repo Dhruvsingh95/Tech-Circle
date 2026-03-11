@@ -1,50 +1,128 @@
 def play_game():
-    # 1. Setup the world
     rooms = {
         'Entrance': {
-            'desc': 'You are in a dark foyer. A light shines from the East.',
-            'east': 'Library'
+            'desc': 'You are at the castle entrance. Paths lead East and South. A huge locked door lies to the North.',
+            'east': 'Library',
+            'south': 'Armory',
+            'north': 'Treasure Room'
         },
+
         'Library': {
-            'desc': 'Walls of books surround you. The exit is West.',
-            'west': 'Entrance'
+            'desc': 'Rows of dusty books surround you. A golden key rests on a table.',
+            'west': 'Entrance',
+            'item': 'key'
+        },
+
+        'Armory': {
+            'desc': 'Old weapons hang on the wall. A strong sword lies here.',
+            'north': 'Entrance',
+            'west': 'Garden',
+            'item': 'sword'
+        },
+
+        'Garden': {
+            'desc': 'A quiet garden with glowing flowers. A magical gem lies near the fountain.',
+            'east': 'Armory',
+            'item': 'gem'
+        },
+
+        'Treasure Room': {
+            'desc': 'The treasure chamber opens before you. Mountains of gold shine everywhere!',
+            'item': None
         }
     }
 
     current_room = 'Entrance'
-    
-    print("Welcome to the Python Quest!")
-    print("----------------------------")
+    inventory = []
 
-    # 2. The Main Loop
+    print("Welcome to the Python Adventure!")
+    print("Commands:")
+    print("go [direction]  (north / south / east / west)")
+    print("get [item]")
+    print("inventory")
+    print("quit")
+
+    required_items = ['key', 'sword', 'gem']
+
     while True:
-        print(f"\nLocation: {current_room}")
+
+        print("\n---------------------------------")
+        print(f"You are in: {current_room}")
         print(rooms[current_room]['desc'])
-        
-        # ALL of this below must be indented 8 spaces (or 2 tabs)
-        user_input = input("> ").lower().strip()
-        
-        if not user_input:
-            print("Please type a command!")
-            continue  # Now this is "properly in loop"!
 
-        command = user_input.split()
-
-        if command[0] == "quit":
-            print("Goodbye!")
+        if current_room == 'Treasure Room':
+            print("You collected all artifacts and opened the treasure chamber!")
+            print("YOU WIN!")
             break
 
-        if command[0] == "go":
-            if len(command) > 1:
-                direction = command[1]
-                if direction in rooms[current_room]:
-                    current_room = rooms[current_room][direction]
-                else:
-                    print(f"You can't go {direction}!")
-            else:
-                print("Go where? (e.g., 'go east')")
-        else:
-            print("I don't understand. Try 'go [direction]' or 'quit'.")
+        user_input = input("> ").lower().strip()
+        command = user_input.split()
 
-# This starts the function - keep it at the very edge!
+        if not command:
+            continue
+
+        # MOVEMENT
+        if command[0] == "go":
+
+            if len(command) < 2:
+                print("(enter direction: north / south / east / west)")
+                continue
+
+            direction = command[1]
+
+            if direction in rooms[current_room]:
+
+                # Special lock condition
+                if current_room == "Entrance" and direction == "north":
+
+                    if all(item in inventory for item in required_items):
+                        print("You place the key, sword, and gem into the ancient lock. The door opens!")
+                        current_room = rooms[current_room][direction]
+                    else:
+                        print("The door has three locks.")
+                        print("You must collect: key, sword, and gem before entering.")
+
+                else:
+                    current_room = rooms[current_room][direction]
+
+            else:
+                print("(Possible directions:", 
+                      [d for d in rooms[current_room] if d in ['north','south','east','west']], ")")
+
+        # PICK ITEMS
+        elif command[0] == "get" or command[0] == "take":
+
+            if len(command) < 2:
+                print("(enter item name)")
+                continue
+
+            item = command[1]
+
+            if rooms[current_room].get('item') == item:
+
+                inventory.append(item)
+                rooms[current_room]['item'] = None
+
+                print(f"You picked up the {item}!")
+
+            else:
+                print("(Possible item here:", rooms[current_room].get('item'), ")")
+
+        # INVENTORY
+        elif command[0] == "inventory" or command[0] == "i":
+
+            if inventory:
+                print("Inventory:", inventory)
+            else:
+                print("Inventory is empty")
+
+        # QUIT
+        elif command[0] == "quit":
+            print("Game exited.")
+            break
+
+        else:
+            print("(Commands: go [direction], get [item], inventory, quit)")
+
+
 play_game()
