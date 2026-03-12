@@ -1,50 +1,149 @@
+import random
+
 def play_game():
-    # 1. Setup the world
+
     rooms = {
+
         'Entrance': {
-            'desc': 'You are in a dark foyer. A light shines from the East.',
-            'east': 'Library'
+            'desc': 'You stand at the entrance of an ancient dungeon.',
+            'east': 'Library',
+            'south': 'Armory'
         },
+
         'Library': {
-            'desc': 'Walls of books surround you. The exit is West.',
-            'west': 'Entrance'
+            'desc': 'Dusty books surround you. A golden key lies on a table.',
+            'west': 'Entrance',
+            'item': 'key'
+        },
+
+        'Armory': {
+            'desc': 'Broken shields and weapons lie scattered. A sword rests here.',
+            'north': 'Entrance',
+            'west': 'Garden',
+            'item': 'sword'
+        },
+
+        'Garden': {
+            'desc': 'A glowing gem floats near a fountain. A Goblin guards it!',
+            'east': 'Armory',
+            'north': 'Treasure Room',
+            'item': 'gem',
+            'enemy': 'Goblin'
+        },
+
+        'Treasure Room': {
+            'desc': 'The treasure vault filled with gold awaits you!'
         }
     }
 
     current_room = 'Entrance'
-    
-    print("Welcome to the Python Quest!")
-    print("----------------------------")
+    inventory = []
+    health = 100
+    enemy_alive = True
 
-    # 2. The Main Loop
+    print("WELCOME TO THE DUNGEON QUEST")
+    print("Commands:")
+    print("go [north/south/east/west]")
+    print("get [item]")
+    print("attack")
+    print("inventory")
+    print("quit")
+
     while True:
-        print(f"\nLocation: {current_room}")
+
+        print("\n--------------------------------")
+        print("Location:", current_room)
+        print("Health:", health)
         print(rooms[current_room]['desc'])
-        
-        # ALL of this below must be indented 8 spaces (or 2 tabs)
-        user_input = input("> ").lower().strip()
-        
-        if not user_input:
-            print("Please type a command!")
-            continue  # Now this is "properly in loop"!
 
-        command = user_input.split()
-
-        if command[0] == "quit":
-            print("Goodbye!")
+        if health <= 0:
+            print("You have fallen in battle. Game Over.")
             break
 
-        if command[0] == "go":
-            if len(command) > 1:
-                direction = command[1]
-                if direction in rooms[current_room]:
-                    current_room = rooms[current_room][direction]
-                else:
-                    print(f"You can't go {direction}!")
+        if current_room == "Treasure Room":
+            if all(item in inventory for item in ['key','sword','gem']):
+                print("You unlocked the treasure chamber!")
+                print("YOU WIN!")
+                break
             else:
-                print("Go where? (e.g., 'go east')")
-        else:
-            print("I don't understand. Try 'go [direction]' or 'quit'.")
+                print("The door requires key, sword, and gem.")
+                current_room = 'Garden'
+                continue
 
-# This starts the function - keep it at the very edge!
+        command = input("> ").lower().split()
+
+        if not command:
+            continue
+
+        # MOVEMENT
+        if command[0] == "go":
+
+            if len(command) < 2:
+                print("(possible directions: north south east west)")
+                continue
+
+            direction = command[1]
+
+            if direction in rooms[current_room]:
+                current_room = rooms[current_room][direction]
+            else:
+                print("(You can't go that way)")
+
+        # PICK ITEMS
+        elif command[0] == "get":
+
+            if len(command) < 2:
+                print("(enter item name)")
+                continue
+
+            item = command[1]
+
+            if 'enemy' in rooms[current_room] and enemy_alive:
+                print("The enemy blocks you! Defeat it first.")
+                continue
+
+            if rooms[current_room].get('item') == item:
+                inventory.append(item)
+                rooms[current_room]['item'] = None
+                print("You picked up:", item)
+            else:
+                print("(item not found here)")
+
+        # ATTACK ENEMY
+        elif command[0] == "attack":
+
+            if 'enemy' in rooms[current_room] and enemy_alive:
+
+                if 'sword' not in inventory:
+                    print("You need a sword to fight!")
+                    continue
+
+                player_hit = random.randint(10,30)
+                enemy_hit = random.randint(5,20)
+
+                print("You strike the enemy for", player_hit)
+
+                if player_hit > enemy_hit:
+                    print("Enemy defeated!")
+                    enemy_alive = False
+                else:
+                    health -= enemy_hit
+                    print("Enemy hits back! You lose", enemy_hit, "health")
+
+            else:
+                print("There is nothing to attack.")
+
+        # INVENTORY
+        elif command[0] == "inventory":
+            print("Inventory:", inventory)
+
+        # QUIT
+        elif command[0] == "quit":
+            print("Game exited.")
+            break
+
+        else:
+            print("(commands: go, get, attack, inventory, quit)")
+
+
 play_game()
