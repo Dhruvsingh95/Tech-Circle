@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dhruv Singh Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Dhruv Singh</h1>
+    <p>Gaming Enthusiast | Avid Learner</p>
+</header>
+
+<section>
+    <h2>About Me</h2>
+    <p>
+        I am a Computer Science student passionate about game builidng and
+  deployment.Always looking forward for intresting projects
+    </p>
+</section>
+
+<section>
+    <h2>Projects</h2>
+    <ul>
+        <li>Weather Dashboard API</li>
+        <li>Text adventure Game</li>
+        <li>Nuber Guessing Name</li>
+    </ul>
+</section>
+
+<footer>
+    <p>Contact: reach.dhruvsingh@gmail.com</p>
+</footer>
+
+</body>
+</html>
