@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dhruv | Developer Portfolio</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+margin:0;
+background:linear-gradient(135deg,#00f7ff,#0047ff,#020617);
+background-size:400% 400%;
+animation:gradientMove 10s ease infinite;
+color:white;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px 40px;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(10px);
+border-bottom:1px solid #00f7ff;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+nav a{
+color:#00f7ff;
+text-decoration:none;
+}
+
+nav a:hover{
+text-shadow:0 0 10px #00f7ff;
+}
+
+header{
+text-align:center;
+padding:120px 20px;
+}
+
+header h1{
+font-size:48px;
+text-shadow:0 0 10px #00f7ff,0 0 20px #00f7ff;
+}
+
+.btn{
+background:#00f7ff;
+padding:12px 25px;
+color:black;
+text-decoration:none;
+border-radius:6px;
+box-shadow:0 0 10px #00f7ff;
+}
+
+section{
+padding:80px 40px;
+max-width:1000px;
+margin:auto;
+}
+
+.project-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.project-card{
+background:rgba(255,255,255,0.05);
+border:1px solid #00f7ff;
+padding:20px;
+border-radius:12px;
+backdrop-filter:blur(10px);
+transition:0.3s;
+}
+
+.project-card:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:0 0 15px #00f7ff;
+}
+
+.btn-small{
+display:inline-block;
+margin-top:10px;
+background:#00f7ff;
+color:black;
+padding:8px 14px;
+border-radius:5px;
+text-decoration:none;
+box-shadow:0 0 8px #00f7ff;
+}
+
+.skills{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.skills span{
+background:rgba(255,255,255,0.05);
+border:1px solid #00f7ff;
+padding:10px 15px;
+border-radius:6px;
+box-shadow:0 0 5px #00f7ff;
+}
+
+footer{
+text-align:center;
+padding:30px;
+background:rgba(0,0,0,0.7);
+border-top:1px solid #00f7ff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<h2>Dhruv</h2>
+
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+
+<header>
+
+<h1>Hello, I'm Dhruv</h1>
+
+<p>Engineering Student | Learning Programming & Algorithms</p>
+
+<a href="#projects" class="btn">View My Work</a>
+
+</header>
+
+
+<section id="about">
+
+<h2>About Me</h2>
+
+<p>
+I am a first year engineering student interested in programming,
+algorithms and building practical projects. I enjoy exploring
+how software works and creating small tools that solve problems.
+</p>
+
+</section>
+
+
+<section id="projects">
+
+<h2>Projects</h2>
+
+<div class="project-grid">
+
+<div class="project-card">
+<h3>Weather Dashboard</h3>
+<p>Weather dashboard using API, HTML, CSS and JavaScript.</p>
+<a href="#" class="btn-small">View Project</a>
+</div>
+
+<div class="project-card">
+<h3>Expense Tracker</h3>
+<p>A Python based program that records expenses and stores them in CSV.</p>
+<a href="#" class="btn-small">View Project</a>
+</div>
+
+<div class="project-card">
+<h3>Text Adventure Game</h3>
+<p>A command line adventure game created using Python.</p>
+<a href="#" class="btn-small">View Project</a>
+</div>
+
+<div class="project-card">
+<h3>String Matching Algorithm</h3>
+<p>Implementation of brute force string matching in C.</p>
+<a href="#" class="btn-small">View Project</a>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="skills">
+
+<h2>Skills</h2>
+
+<div class="skills">
+
+<span>Python</span>
+<span>C Programming</span>
+<span>HTML</span>
+<span>CSS</span>
+<span>JavaScript</span>
+<span>GitHub</span>
+
+</div>
+
+</section>
+
+
+<section id="contact">
+
+<h2>Contact</h2>
+
+<p>Email: reach.dhruvsingh@gmail.com</p>
+<p>GitHub: Dhruvsingh95 </p>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 Dhruv</p>
+
+</footer>
+
+
+<script>
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+anchor.addEventListener("click",function(e){
+e.preventDefault();
+
+document.querySelector(this.getAttribute("href")).scrollIntoView({
+behavior:"smooth"
+});
+
+});
+});
+
+</script>
+
+</body>
+</html>
