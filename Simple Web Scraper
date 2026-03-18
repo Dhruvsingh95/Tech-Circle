@@ -2,16 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-# Step 1: URL of the website
 url = "https://news.ycombinator.com/"
 
-# Step 2: Send request to website
 response = requests.get(url)
 
-# Step 3: Parse the HTML
 soup = BeautifulSoup(response.text, "html.parser")
 
-# Step 4: Find all titles
 titles = soup.find_all("span", class_="titleline")
 
 data = []
@@ -25,7 +21,7 @@ for title in titles:
         "Link": link
     })
 
-# Step 5: Save to CSV
+
 df = pd.DataFrame(data)
 df.to_csv("scraped_news.csv", index=False)
 
